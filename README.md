@@ -2,7 +2,7 @@
 Customizable keypad lock for 3D games.
 <br>
 <img alt="gdscript" src="https://img.shields.io/badge/-GODOT-478CBF?style=flat-square&logo=godotengine&logoColor=white" />
-
+Video - https://youtu.be/VKYjz5R73Os
 # Features
 - Connects to your game via signals
 - Plays audio when password is correct, wrong, or cleared
