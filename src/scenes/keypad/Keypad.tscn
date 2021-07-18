@@ -1,0 +1,121 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://scenes/keypad/KeypadButton.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/keypad/Keypad.gd" type="Script" id=2]
+[ext_resource path="res://assets/white tick.png" type="Texture" id=3]
+[ext_resource path="res://assets/pressed_key.wav" type="AudioStream" id=4]
+[ext_resource path="res://fonts/roboto16.tres" type="DynamicFont" id=5]
+[ext_resource path="res://assets/wrong_password.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/correct_password.wav" type="AudioStream" id=7]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 0.35, 0.55, 0.02 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.423529, 0.423529, 0.423529, 1 )
+roughness = 0.5
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0313726, 0.0313726, 0.0313726, 1 )
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("PasswordViewport")
+
+[node name="Keypad" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="PressedAudioStream" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_size = 45.0
+
+[node name="CorrectAudioStream" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 7 )
+unit_size = 45.0
+
+[node name="WrongAudioStream" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 6 )
+unit_size = 45.0
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.014 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="Keys" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00114202, 0 )
+
+[node name="Key1" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106, 0.107, 0 )
+number = "1"
+
+[node name="Key2" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.107, 0 )
+number = "2"
+
+[node name="Key3" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.106, 0.107, 0 )
+number = "3"
+
+[node name="Key4" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.105675, 0, 0 )
+number = "4"
+
+[node name="Key5" parent="Keys" instance=ExtResource( 1 )]
+number = "5"
+
+[node name="Key6" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.105675, 0, 0 )
+number = "6"
+
+[node name="Key7" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106, -0.107, 0 )
+number = "7"
+
+[node name="Key8" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.107, 0 )
+number = "8"
+
+[node name="Key9" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.106, -0.107, 0 )
+number = "9"
+
+[node name="KeyClear" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.106, -0.214, 0 )
+number = "C"
+
+[node name="Key0" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.214, 0 )
+
+[node name="KeyEnter" parent="Keys" instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.106, -0.214, 0 )
+number = "."
+
+[node name="TickMark" type="Sprite3D" parent="Keys/KeyEnter"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.006, -0.004, -0.008 )
+flip_h = true
+texture = ExtResource( 3 )
+
+[node name="PasswordViewport" type="Viewport" parent="."]
+size = Vector2( 40, 18 )
+transparent_bg = true
+
+[node name="Panel" type="Panel" parent="PasswordViewport"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_styles/panel = SubResource( 3 )
+
+[node name="PasswordLabel" type="Label" parent="PasswordViewport"]
+margin_right = 36.0
+margin_bottom = 19.0
+rect_min_size = Vector2( 36, 19 )
+custom_fonts/font = ExtResource( 5 )
+text = "1234"
+valign = 1
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.216, 0.00218582 )
+flip_h = true
+flip_v = true
+texture = SubResource( 4 )
+
+[connection signal="finished" from="PressedAudioStream" to="." method="_on_AudioStreamPlayer3D_finished"]
